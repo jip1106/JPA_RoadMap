@@ -15,7 +15,9 @@
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.use_sql_comments" value="true"/>
-            <!--<property name="hibernate.hbm2ddl.auto" value="create" />-->
+            <property name="hibernate.jdbc.batch_size" value="10"/>
+            <!-- Entity가 맵핑된 객체들의 테이블을 자동으로 만들어주는 옵션 create , create-drop, update, validate, none -->
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
         </properties>
     </persistence-unit>
 </persistence>
