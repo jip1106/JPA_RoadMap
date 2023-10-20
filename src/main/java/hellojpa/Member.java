@@ -55,6 +55,10 @@ public class Member {
         this.username = name;
     }
 
+    public void changeTeam(Team team){
+        this.team = team;
+        team.getMembers().add(this);
+    }
 /*
     public Long getId() {
         return id;

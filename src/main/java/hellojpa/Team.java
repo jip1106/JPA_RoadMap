@@ -23,6 +23,11 @@ public class Team {
     @OneToMany(mappedBy = "team")  //팀 1 : 멤버 N   mappedBy => Member의 Team team 변수
     private List<Member> members = new ArrayList<>();
 
+    public void addMember(Member member){
+        member.setTeam(this);
+        members.add(member);
+    }
+
 
     /*
         연관 관계의 주인과 mappedBy

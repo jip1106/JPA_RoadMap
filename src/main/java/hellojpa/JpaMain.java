@@ -36,7 +36,7 @@ public class JpaMain {
                 member = new Member();
                 //@GeneratedValue 로 자동 생성
                 //member.setId(i);
-                member.setName("박준"+ i);
+                member.setUsername("박준"+ i);
 
                 //영속 상태
                 //persist는 db에 저장하는게 아니라 엔티티를 영속성 컨텍스트에 저장하는것
@@ -46,14 +46,14 @@ public class JpaMain {
             //데이터 찾기
             Member findMember = em.find(Member.class, 1L);
             System.out.println("findMember.id = "  + findMember.getId());
-            System.out.println("findMember.name = " + findMember.getName());
+            System.out.println("findMember.name = " + findMember.getUsername());
 
             //데이터 삭제
             em.remove(findMember);
 
             //데이터 수정
             findMember = em.find(Member.class, 2L);
-            findMember.setName("박준삼");
+            findMember.setUsername("박준삼");
 
 
             // Member 객체를 대상으로 셀렉
@@ -61,7 +61,7 @@ public class JpaMain {
                     .getResultList();
 
             for (Member tmpMember : result) {
-                System.out.println("member.name = " + tmpMember.getName());
+                System.out.println("member.name = " + tmpMember.getUsername());
             }
 
 
@@ -71,7 +71,7 @@ public class JpaMain {
             long setIdVal = 100L;
 
             //member2.setId(setIdVal);
-            member2.setName("HelloJPA");
+            member2.setUsername("HelloJPA");
 
             //객체를 저장한 상태 (영속)
             System.out.println("=== BEFORE ===");
@@ -86,7 +86,7 @@ public class JpaMain {
 
             while(optFindMember.isPresent()){
                 System.out.println("findMember.id = " + optFindMember.get().getId());
-                System.out.println("findMember.name = " + optFindMember.get().getName());
+                System.out.println("findMember.name = " + optFindMember.get().getUsername());
                 optFindMember = Optional.ofNullable(em.find(Member.class, ++setIdVal));
             }
             //member2.setId(setIdVal);
@@ -115,7 +115,7 @@ public class JpaMain {
             // JPA는 값을 바꾸면 트랜잭션이 커밋되는 시점에 업데이트 쿼리가 날라간다.
             //*
             Optional<Member> findMember150 = Optional.ofNullable(em.find(Member.class,150L));
-            findMember150.ifPresent(value -> value.setName("수정한 이름"));
+            findMember150.ifPresent(value -> value.setUsername("수정한 이름"));
 
             //em.detach(findMember150);
 
