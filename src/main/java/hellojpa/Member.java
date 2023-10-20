@@ -1,5 +1,8 @@
 package hellojpa;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -14,6 +17,8 @@ import java.util.Date;
 
 @Entity //@Entity가 붙은 클래스는 JPA가 관리
 @Table(name="MEMBER")   //name="CO_MEMBER" 테이블에 맵핑
+@Getter
+@Setter
 public class Member {
 
     @Id  @GeneratedValue
@@ -50,7 +55,7 @@ public class Member {
         this.username = name;
     }
 
-
+/*
     public Long getId() {
         return id;
     }
@@ -122,7 +127,7 @@ public class Member {
     public void setUsername(String username) {
         this.username = username;
     }
-/*
+
     public Long getTeamId() {
         return teamId;
     }
@@ -130,7 +135,7 @@ public class Member {
     public void setTeamId(Long teamId) {
         this.teamId = teamId;
     }
- */
+
 
     public Team getTeam() {
         return team;
@@ -139,4 +144,5 @@ public class Member {
     public void setTeam(Team team) {
         this.team = team;
     }
+     */
 }
