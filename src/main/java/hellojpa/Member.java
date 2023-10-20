@@ -12,14 +12,23 @@ import java.util.Date;
   - 저장할 필드에 final 사용 X
 */
 
-//@Entity //@Entity가 붙은 클래스는 JPA가 관리
-@Table(name="MEMBER2")   //name="CO_MEMBER" 테이블에 맵핑
+@Entity //@Entity가 붙은 클래스는 JPA가 관리
+@Table(name="MEMBER")   //name="CO_MEMBER" 테이블에 맵핑
 public class Member {
 
-    @Id
+    @Id  @GeneratedValue
+    @Column(name = "member_id")
     private Long id;
-    @Column(name="name")        //db 컬럼명
+    @Column(name="username")        //db 컬럼명
     private String username;
+
+//    @Column(name ="team_id")
+//    private Long teamId;
+
+    @ManyToOne //member 입장에서 Team은 하나
+    @JoinColumn(name ="team_id")
+    private Team team;
+
     private Integer age;
     @Enumerated(EnumType.STRING)
     private RoleType roleType;
@@ -104,5 +113,30 @@ public class Member {
 
     public void setTemp(int temp) {
         this.temp = temp;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+/*
+    public Long getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(Long teamId) {
+        this.teamId = teamId;
+    }
+ */
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 }

@@ -18,6 +18,10 @@ public class JpaMain {
         tx.begin();
 
         try {
+
+            /**/
+
+
             /* 데이터 저장 */
             Member member = null;
             for(long i=1; i<10; i++){
@@ -30,7 +34,8 @@ public class JpaMain {
 
                 //비영속 상태 -> JPA와 관계 없이 자바 객체 생성, 셋팅
                 member = new Member();
-                member.setId(i);
+                //@GeneratedValue 로 자동 생성
+                //member.setId(i);
                 member.setName("박준"+ i);
 
                 //영속 상태
@@ -65,7 +70,7 @@ public class JpaMain {
             Member member2 = new Member();
             long setIdVal = 100L;
 
-            member2.setId(setIdVal);
+            //member2.setId(setIdVal);
             member2.setName("HelloJPA");
 
             //객체를 저장한 상태 (영속)
@@ -84,7 +89,7 @@ public class JpaMain {
                 System.out.println("findMember.name = " + optFindMember.get().getName());
                 optFindMember = Optional.ofNullable(em.find(Member.class, ++setIdVal));
             }
-            member2.setId(setIdVal);
+            //member2.setId(setIdVal);
             em.persist(member2);
             System.out.println("=== AFTER ===");
 
@@ -96,9 +101,9 @@ public class JpaMain {
             //em.remove(member2);
 
 
-            Member m1 = new Member(150L, "A");
+            //Member m1 = new Member(150L, "A");
             //Member m2 = new Member(160L, "B");
-            em.persist(m1);
+            //em.persist(m1);
             //em.persist(m2);
 
             //
@@ -129,8 +134,8 @@ public class JpaMain {
              영속성 컨텍스트의 변경 내용을 데이터베이스에 동기화
              트랜잭션이라는 작업 단위가 중요 -> 커밋 직전에만 동기화 하면 됌
 */
-            Member member200 = new Member(200L,"member200");
-            em.persist(member200);
+            //Member member200 = new Member(200L,"member200");
+            //em.persist(member200);
 
             //em.flush();
             System.out.println("============================");
