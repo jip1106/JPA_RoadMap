@@ -1,11 +1,13 @@
-package jpabook.japshop.domain;
+package jpabook.japshop.domain2;
 
+import jpabook.japshop.domain.Item;
+import jpabook.japshop.domain.Order;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 
-@Entity(name="ORDER_ITEM_BEFORE")
+@Entity
 @Getter
 @Setter
 public class OrderItem {

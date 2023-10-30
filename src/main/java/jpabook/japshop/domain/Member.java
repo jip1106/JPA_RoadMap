@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@Entity(name="MEMBER_BEFORE")
 @Getter
 @Setter
 public class Member {

@@ -1,7 +1,8 @@
-package jpabook.japshop;
+package jpabook.japshop.domain;
 
 import jpabook.japshop.domain.Order;
 import jpabook.japshop.domain.OrderItem;
+import jpabook.japshop.domain2.Book;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -21,6 +22,12 @@ public class JpaMain {
 
             Order order = new Order();
             order.addOrderItem(new OrderItem());
+
+            Book book = new Book();
+            book.setName("JPA");
+            book.setAuthor("김영한");
+
+            em.persist(book );
 
             tx.commit();
 
