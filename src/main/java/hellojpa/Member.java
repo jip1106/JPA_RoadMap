@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /*
@@ -19,7 +20,7 @@ import java.util.Date;
 @Table(name="MEMBER")   //name="CO_MEMBER" 테이블에 맵핑
 @Getter
 @Setter
-public class Member {
+public class Member extends BaseEntity{
 
     @Id  @GeneratedValue
     @Column(name = "member_id")
@@ -31,7 +32,7 @@ public class Member {
 //    private Long teamId;
 
     @ManyToOne //member 입장에서 Team은 하나
-    @JoinColumn(name ="team_id")
+    @JoinColumn(name ="team_id", insertable = false, updatable = false)
     private Team team;
 
     @OneToOne
@@ -41,15 +42,20 @@ public class Member {
     private Integer age;
     @Enumerated(EnumType.STRING)
     private RoleType roleType;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastModifiedDate;
+
     @Lob
     private String description;
     
     @Transient  //db랑 관계 없이 사용
     private int temp;
+    /*
+    private String createdBy;
+    private String modifiedBy;
+    private String lastModifiedBy;
+    private LocalDateTime lastModifiedDate;
+
+     */
+
     
     public Member(){
 

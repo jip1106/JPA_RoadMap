@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Team {
+public class Team extends BaseEntity{
 
     @Id
     @GeneratedValue
