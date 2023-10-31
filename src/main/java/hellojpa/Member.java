@@ -31,8 +31,11 @@ public class Member extends BaseEntity{
 //    @Column(name ="team_id")
 //    private Long teamId;
 
-    @ManyToOne //member 입장에서 Team은 하나
-    @JoinColumn(name ="team_id", insertable = false, updatable = false)
+    //FetchType.LAZY 옵션을 주면, Member를 조회할때 Team을 같이 조회 안하고 Member만 조회
+    //@ManyToOne(fetch = FetchType.LAZY) //member 입장에서 Team은 하나 (지연로딩)
+    @ManyToOne(fetch = FetchType.EAGER)//member 입장에서 Team은 하나 (즉시로딩)
+    //@JoinColumn(name ="team_id", insertable = false, updatable = false)
+    @JoinColumn(name ="team_id")
     private Team team;
 
     @OneToOne
