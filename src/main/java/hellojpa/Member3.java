@@ -12,7 +12,7 @@ import java.util.Set;
 @Entity(name="MEMBER3")
 @Getter
 @Setter
-public class Member3 {
+public class Member3{
 
     @Id
     @GeneratedValue
