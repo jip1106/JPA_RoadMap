@@ -20,6 +20,7 @@
             <property name="hibernate.jdbc.batch_size" value="10"/>
             <!-- Entity가 맵핑된 객체들의 테이블을 자동으로 만들어주는 옵션 create , create-drop, update, validate, none -->
             <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <property name="hibernate.ddefault_batch_fetch_size" value="100"/>
         </properties>
     </persistence-unit>
 </persistence>
