@@ -9,15 +9,15 @@ import lombok.Getter;
 public class Address {
 
     private String city;
-    private String stree;
+    private String street;
     private String zipcode;
 
     protected Address() {
     }
 
-    public Address(String city, String stree, String zipcode) {
+    public Address(String city, String street, String zipcode) {
         this.city = city;
-        this.stree = stree;
+        this.street = street;
         this.zipcode = zipcode;
     }
 }

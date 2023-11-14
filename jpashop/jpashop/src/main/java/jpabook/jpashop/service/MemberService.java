@@ -62,4 +62,10 @@ public class MemberService {
     public Member findOne(Long memberId){
         return memberRepository.findOne(memberId);
     }
+
+    @Transactional
+    public void update(Long id, String name) {
+        Member findMember = memberRepository.findOne(id);   //db에서 찾아와서 영속상태
+        findMember.setName(name);       //변경감지에 의해 update문 실행
+    }
 }
