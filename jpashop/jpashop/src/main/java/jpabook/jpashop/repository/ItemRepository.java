@@ -17,6 +17,7 @@ public class ItemRepository {
         if(item.getId() == null){
             em.persist(item);
         }else{
+            //영속성 컨텍스트에서 itemId로 엔티티를 찾고
             em.merge(item);
         }
     }
