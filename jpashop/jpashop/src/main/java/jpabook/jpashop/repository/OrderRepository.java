@@ -111,8 +111,33 @@ public class OrderRepository {
                 " join fetch o.delivery d", Order.class
         ).getResultList();
     }
+
+    public List<Order> findAllWithMemberDelivery(int offset, int limit) {
+        return em.createQuery(
+                "select o from Order o" +
+                        " join fetch o.member  m " +
+                        " join fetch o.delivery d", Order.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+    }
+
+    public List<Order> findAllWithItem() {
+        //일대 다 관계에서 패치조인을 쓸 때는 페이징을 쓰면 안됌 -> Order , OrerItems 는 일대 다 관계
+        return em.createQuery(
+                "select o From Order o " +
+                        " join fetch o.member m " +
+                        " join fetch o.delivery d " +
+                        " join fetch o.orderItems oi " +
+                        " join fetch oi.item i", Order.class
+                )
+                .getResultList();
+    }
+
+
 /*
     //DTO로 바로 조회하는 기능
+    //바로 조회하는건 따로 뺴서 만듦 (OrderSimpleQueryRepository)
     public List<OrderSimpleQueryDto> findOrderDtos() {
         return em.createQuery("select " +
                 " new jpabook.jpashop.repository.order.simplequery.OrderSimpleQueryDto(o.id, m.name, o.orderDate, o.status, d.address)"+
