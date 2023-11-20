@@ -6,6 +6,8 @@ import jpabook.jpashop.repository.order.query.OrderFlatDto;
 import jpabook.jpashop.repository.order.query.OrderItemQueryDto;
 import jpabook.jpashop.repository.order.query.OrderQueryDto;
 import jpabook.jpashop.repository.order.query.OrderQueryRepository;
+import jpabook.jpashop.service.query.OrderItemDto;
+import jpabook.jpashop.service.query.OrderQueryService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,14 +25,17 @@ import static java.util.stream.Collectors.*;
 public class OrderApiController {
     private final OrderRepository orderRepository;
     private final OrderQueryRepository orderQueryRepository;
+    private final OrderQueryService orderQueryService;
 
 
     @GetMapping("/api/v1/orders")
     public List<Order> orderV1(){
         List<Order> all = orderRepository.findAllByString(new OrderSearch());
+
         for (Order order : all) {
-            //프록시 강제 초기화
-            order.getMember().getName();
+
+            //프록시 강제 초기화 -> 지연로딩 발생
+            order.getMember().getName();    //open-in-view: false 를 설정하는 순간 에러 발생 (프록시 초기화 X)
             order.getDelivery().getAddress();
 
             List<OrderItem> orderItems = order.getOrderItems();
@@ -61,6 +66,12 @@ public class OrderApiController {
                 .collect(toList());
 
         return orderItems;
+    }
+
+    //open-in-view 옵션을 껏기때문에 Lazy 로딩 X -> 따로 분리해서 레이지로딩을 하도록 만들어줌
+    @GetMapping("/api/v3-open-in-view/orders")
+    public List<jpabook.jpashop.service.query.OrderDto> orderV3OpenInView(){
+        return orderQueryService.orderV3();
     }
 
 
@@ -134,20 +145,6 @@ public class OrderApiController {
             orderItems = order.getOrderItems().stream()
                     .map(orderItem -> new OrderItemDto(orderItem))
                     .collect(toList());
-        }
-    }
-
-    @Getter
-    static class OrderItemDto{
-
-        private String itemName;
-        private int orderPrice;
-        private int count;
-
-        public OrderItemDto(OrderItem orderItem) {
-            this.itemName = orderItem.getItem().getName();
-            this.orderPrice = orderItem.getOrderPrice();
-            this.count = orderItem.getCount();
         }
     }
 

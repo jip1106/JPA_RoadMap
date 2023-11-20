@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true) //JPA에서 데이터를 변경할땐 트랜잭션이 있어야 함
@@ -60,12 +61,15 @@ public class MemberService {
         return memberRepository.findAll();
     }
     public Member findOne(Long memberId){
-        return memberRepository.findOne(memberId);
+
+        //return memberRepository.findOne(memberId);
+        return memberRepository.findById(memberId).get();
     }
 
     @Transactional
     public void update(Long id, String name) {
-        Member findMember = memberRepository.findOne(id);   //db에서 찾아와서 영속상태
+        //Member findMember = memberRepository.findOne(id);   //db에서 찾아와서 영속상태
+        Member findMember = memberRepository.findById(id).get();
         findMember.setName(name);       //변경감지에 의해 update문 실행
     }
 }
