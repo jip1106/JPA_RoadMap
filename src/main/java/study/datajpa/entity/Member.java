@@ -9,6 +9,12 @@ import org.springframework.context.annotation.Lazy;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(of = {"id","username","age"})
+//엔티티에 NamedQuery를 적어서 호출
+@NamedQuery(
+        name="Member.findByUsername",
+        query="select m From Member m Where m.username = :username"
+)
+@NamedEntityGraph(name = "Member.all", attributeNodes = @NamedAttributeNode("team"))
 public class Member {
 
     @Id @GeneratedValue
@@ -24,6 +30,11 @@ public class Member {
 
     public Member(String username){
         this.username = username;
+    }
+
+    public Member(String username, int age){
+        this.username = username;
+        this.age = age;
     }
 
     public Member(String username, int age, Team team) {

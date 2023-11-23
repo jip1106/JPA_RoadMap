@@ -5,7 +5,6 @@ import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import study.datajpa.entity.Member;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,5 +40,44 @@ public class MemberJpaRepository {
     public long count(){
         return em.createQuery("select count(m) From Member m", Long.class)
                 .getSingleResult();
+    }
+
+    public List<Member> findByUsernameAndAgeGreaterThan(String username, int age){
+        List<Member> resultList = em.createQuery("Select m From Member m Where m.username =:username and m.age > :age" ,Member.class)
+                .setParameter("username", username)
+                .setParameter("age", age)
+                .getResultList();
+
+        return resultList;
+    }
+
+    public List<Member> findByUsername(String username){
+        return em.createNamedQuery("Member.findByUsername", Member.class)
+                .setParameter("username" , username)
+                .getResultList();
+    }
+
+    public List<Member> findByPage(int age, int offset, int limit){
+        return em.createQuery("select m From Member m Where m.age = :age order by m.username desc", Member.class)
+                .setParameter("age",age)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+    }
+
+    public long totalCount(int age){
+        return em.createQuery("select count(m) From Member m Where m.age = :age",Long.class)
+                .setParameter("age",age)
+                .getSingleResult();
+    }
+
+    public int bulkAgePlus(int age){
+        int rtnVal = em.createQuery("update Member m set m.age = m.age + 1 Where m.age >= :age")
+                .setParameter("age", age)
+                .executeUpdate();
+
+        em.clear();
+
+        return rtnVal;
     }
 }
