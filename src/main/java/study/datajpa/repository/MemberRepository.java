@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-public interface MemberRepository extends JpaRepository<Member, Long> {
+public interface MemberRepository extends JpaRepository<Member, Long>, MemberRepositoryCustom {
     //스프링 데이터 JPA는 특화된 검색 들은 어떻게 해결할까..? => 쿼리메소드 기능
     //findByUserName => 오류
     //List<Member> findByUsername(String username);

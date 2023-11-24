@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Lazy;
         query="select m From Member m Where m.username = :username"
 )
 @NamedEntityGraph(name = "Member.all", attributeNodes = @NamedAttributeNode("team"))
-public class Member {
+public class Member extends BaseEntity/*JpaBaseEntity*/{
 
     @Id @GeneratedValue
     @Column(name = "member_id")
