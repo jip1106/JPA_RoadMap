@@ -16,7 +16,10 @@ import java.util.List;
 import java.util.Optional;
 
 
-public interface MemberRepository extends JpaRepository<Member, Long>, MemberRepositoryCustom {
+public interface MemberRepository extends JpaRepository<Member, Long>, MemberRepositoryCustom, JpaSpecificationExecutor<Member> {
+
+
+
     //스프링 데이터 JPA는 특화된 검색 들은 어떻게 해결할까..? => 쿼리메소드 기능
     //findByUserName => 오류
     //List<Member> findByUsername(String username);
@@ -93,6 +96,22 @@ public interface MemberRepository extends JpaRepository<Member, Long>, MemberRep
     //jpa가 lock을 제공
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     List<Member> findLockByUsername(String username);
+
+    List<UsernameOnly> findProjectionsByUsername(@Param("username") String username);
+
+    List<UsernameOnlyDto> findProjectionsDtoByUsername(@Param("username") String username);
+
+    <T> List<T> findProjectionsDtoTypeByUsername(@Param("username") String username, Class<T> type);
+
+    @Query(value = "select * From Member where username = ?" , nativeQuery = true)
+    Member findByNativeQuery(String username);
+
+
+    @Query(value = "select m.member_id as id, m.username, t.name as teamName" +
+            " from member m left join team t "
+            , countQuery = "select count(*) From member"
+            , nativeQuery = true)
+    Page<MemberProjection> findByNativeProjection(Pageable pageable);
 }
 
 
