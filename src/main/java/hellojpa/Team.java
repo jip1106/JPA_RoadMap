@@ -20,7 +20,7 @@ public class Team extends BaseEntity{
     private Long id;
     private String name;
 
-    @OneToMany(mappedBy = "team")  //팀 1 : 멤버 N   mappedBy => Member의 Team team 변수
+    @OneToMany(mappedBy = "team")  //팀 1 : 멤버 N    mappedBy => Member의 Team team 변수
     private List<Member> members = new ArrayList<>();
 
     public void addMember(Member member){
