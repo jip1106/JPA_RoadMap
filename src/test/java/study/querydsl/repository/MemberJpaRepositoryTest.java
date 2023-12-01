@@ -24,7 +24,6 @@ class MemberJpaRepositoryTest {
     @PersistenceContext
     EntityManager em;
 
-    @Autowired
     MemberJpaRepository memberJpaRepository;
 
     @Test
