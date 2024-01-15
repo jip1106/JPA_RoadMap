@@ -31,6 +31,8 @@ public class Member extends BaseEntity{
 //    @Column(name ="team_id")
 //    private Long teamId;
 
+    //외래키가 있는 곳을 주인으로 지정, 주인은 mappedBy 속성 사용X , 주인이 아니면 mappedBy 속성으로 주인 지정
+    //팀1 -> 회원이 N명
     //FetchType.LAZY 옵션을 주면, Member를 조회할때 Team을 같이 조회 안하고 Member만 조회
     //@ManyToOne(fetch = FetchType.LAZY) //member 입장에서 Team은 하나 (지연로딩)
     @ManyToOne(fetch = FetchType.EAGER)//member 입장에서 Team은 하나 (즉시로딩)
@@ -43,6 +45,7 @@ public class Member extends BaseEntity{
     private Locker locker;
 
     private Integer age;
+
     @Enumerated(EnumType.STRING)
     private RoleType roleType;
 

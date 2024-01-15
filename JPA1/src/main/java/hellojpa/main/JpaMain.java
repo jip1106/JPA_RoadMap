@@ -22,8 +22,6 @@ public class JpaMain {
         try {
 
             /**/
-
-
             /* 데이터 저장 */
             Member member = null;
             for(long i=1; i<10; i++){
