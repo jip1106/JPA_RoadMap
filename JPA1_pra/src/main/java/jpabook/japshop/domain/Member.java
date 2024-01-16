@@ -20,6 +20,7 @@ public class Member {
     private String street;
     private String zipcode;
 
+    //회원과 주문의 관계 -> 1:N -> 회원한명이 여러 번 주문 할 수 있음
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
 
