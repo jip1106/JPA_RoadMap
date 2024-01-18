@@ -14,17 +14,34 @@ import java.util.Date;
   - 기본 생성자 필수(파라미터가 없는 public 또는 protected 생성자)
   - final 클래스, enum, interface, inner 클래스 사용 X
   - 저장할 필드에 final 사용 X
+
+  연관관계를 지정할때 익숙한 테이블 설계를 먼저 하고,
+  외래키가 있는곳을 주인으로 지정하자
+  외래키가 없는곳은 @OneToMany(mappedBy="") 속성을 사용하고
+  외래키가 있는 주인은 @ManyToOne(fetch = FetchType.LAZY) 를 사용하자 ( 외래키를 키로 관리하지 말고 객체로 관리)
 */
 
 @Entity //@Entity가 붙은 클래스는 JPA가 관리
-@Table(name="MEMBER")   //name="CO_MEMBER" 테이블에 맵핑
+@Table(name="MEMBER")   //@Table(name="CO_MEMBER") 테이블에 맵핑
 @Getter
 @Setter
 public class Member extends BaseEntity{
 
+    // 기본 생성자는 필수
+    public Member(){
+
+    }
+    public Member(Long id, String name){
+        this.id = id;
+        this.username = name;
+    }
+
+    //@Column(name = "member_id") db에는 member_id로 사용, java에선 id 변수명으로 사용
     @Id  @GeneratedValue
     @Column(name = "member_id")
     private Long id;
+
+
     @Column(name="username")        //db 컬럼명
     private String username;
 
@@ -52,7 +69,7 @@ public class Member extends BaseEntity{
     @Lob
     private String description;
     
-    @Transient  //db랑 관계 없이 사용
+    @Transient  //db랑 관계 없이 메모리 에서 사용
     private int temp;
     /*
     private String createdBy;
@@ -62,14 +79,7 @@ public class Member extends BaseEntity{
 
      */
 
-    
-    public Member(){
 
-    }
-    public Member(Long id, String name){
-        this.id = id;
-        this.username = name;
-    }
 
     public void changeTeam(Team team){
         this.team = team;

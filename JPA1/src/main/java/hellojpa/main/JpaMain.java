@@ -48,10 +48,14 @@ public class JpaMain {
             System.out.println("findMember.id = "  + findMember.getId());
             System.out.println("findMember.name = " + findMember.getUsername());
 
+
+
+
             //데이터 삭제
             em.remove(findMember);
 
             //데이터 수정
+            //더티체킹을 통해서 setUsername 단순히 값을 변경 해주기만 해도 업데이트가 일어남
             findMember = em.find(Member.class, 2L);
             findMember.setUsername("박준삼");
 
@@ -74,6 +78,7 @@ public class JpaMain {
             member2.setUsername("HelloJPA");
 
             //객체를 저장한 상태 (영속)
+            //여기서 insert 쿼리가 나가지 않는다
             System.out.println("=== BEFORE ===");
 
             Optional<Member> optFindMember = Optional.ofNullable(em.find(Member.class, setIdVal));
@@ -89,6 +94,7 @@ public class JpaMain {
                 System.out.println("findMember.name = " + optFindMember.get().getUsername());
                 optFindMember = Optional.ofNullable(em.find(Member.class, ++setIdVal));
             }
+
             //member2.setId(setIdVal);
             em.persist(member2);
             System.out.println("=== AFTER ===");
@@ -111,7 +117,6 @@ public class JpaMain {
             // 엔티티와 스냅샷을 비교함
             // 값을 읽어온 최초 시점의 데이터를 스냅샷으로 떠놓고 엔티티와 스냅샷을 비교한다.
             // 엔티티가 수정된걸 찾아서 쓰기지연 SQL 저장소에 저장해놓고 commit 시점에 업데이트 처리
-            //
             // JPA는 값을 바꾸면 트랜잭션이 커밋되는 시점에 업데이트 쿼리가 날라간다.
             //*
             Optional<Member> findMember150 = Optional.ofNullable(em.find(Member.class,150L));
@@ -122,8 +127,11 @@ public class JpaMain {
 
             System.out.println("=================");
 /*
-            플러시 : 영속성 컨텍스트의 변경내용을 데이터베이스에 반영
+            플러시 : 영속성 컨텍스트의 변경내용을 데이터베이스에 반영 -> 데이터 베이스가 변경될때 플러시가 일어남
             변경감지 , 수정된 엔티티 쓰기 지연 SQL 저장소에 등록 , 쓰기 지연 SQL 저장소의 쿼리를 데이터베이스에 전송(등록,수정,삭제 쿼리)
+
+            => 1차캐시가 지워지는건 아님
+            
             영속성 컨텍스트를 플러시하는 방법
             1. em.flush(); 직접 호출
             2. 트랜잭션 커밋 - 플러시 자동 호출
@@ -147,6 +155,8 @@ public class JpaMain {
             //    - em.close();
 
             //트랜잭션을 커밋하는 시점에 영속성 컨텍스트에 있는 쿼리가 db에 날라감
+
+
             tx.commit();
 
         }catch(Exception e){
