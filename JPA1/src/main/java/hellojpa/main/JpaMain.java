@@ -40,7 +40,9 @@ public class JpaMain {
 
                 //영속 상태
                 //persist는 db에 저장하는게 아니라 엔티티를 영속성 컨텍스트에 저장하는것
+                //기본키 생성 전략이 IDENTITY 이면 이 시점에 바로 insert쿼리를 날린다.
                 em.persist(member);
+                //System.out.println(member.getId()); IDENTITY 전략일때 여기서 id 값을 가져올 수 있음
             }
 
             //데이터 찾기

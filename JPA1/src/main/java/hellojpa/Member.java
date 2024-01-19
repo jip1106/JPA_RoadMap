@@ -15,6 +15,17 @@ import java.util.Date;
   - final 클래스, enum, interface, inner 클래스 사용 X
   - 저장할 필드에 final 사용 X
 
+
+ ** 기본키 매핑
+ • 자동 생성(@GeneratedValue)
+    • IDENTITY: 데이터베이스에 위임, MYSQL
+    • SEQUENCE: 데이터베이스 시퀀스 오브젝트 사용, ORACLE
+    • @SequenceGenerator 필요
+    • TABLE: 키 생성용 테이블 사용, 모든 DB에서 사용
+    • @TableGenerator 필요
+    • AUTO: 방언에 따라 자동 지정, 기본값
+
+
   연관관계를 지정할때 익숙한 테이블 설계를 먼저 하고,
   외래키가 있는곳을 주인으로 지정하자
   외래키가 없는곳은 @OneToMany(mappedBy="") 속성을 사용하고
@@ -37,7 +48,11 @@ public class Member extends BaseEntity{
     }
 
     //@Column(name = "member_id") db에는 member_id로 사용, java에선 id 변수명으로 사용
-    @Id  @GeneratedValue
+    @Id
+    @GeneratedValue
+    //@GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(strategy = GenerationType.SEQUENCE)   //주로 ORACLE에서 사용 -> 키에 맞는 sequence를 만들어 냄
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)   //DB방언에 맞춰서 생성
     @Column(name = "member_id")
     private Long id;
 
