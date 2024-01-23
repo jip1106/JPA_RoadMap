@@ -16,6 +16,10 @@ public class Order {
     @Id    @GeneratedValue
     @Column(name = "ORDER_ID")
     private Long id;
+
+    //주문테이블에 memberId 를 외래키로 가지고 있음
+    // -> 외래키를 가지고 있는 테이블이 연관관계 주인
+    // -> Member에 @OneToMany mappedBy를 걸자!
     //private Long memberId;
 
     @ManyToOne
